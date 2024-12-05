@@ -2,20 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  Button {
+    @apply shadow-md;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .h1-bold {
+    @apply text-[50px] font-bold font-sansita-swashed tracking-wide text-primary;
+  }
+
+  .active {
+    @apply bg-[#FFEA7E];
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }
