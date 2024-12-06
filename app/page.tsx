@@ -35,6 +35,7 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
 
   const fetchResponse = async (data: FormData) => {
@@ -52,8 +53,10 @@ export default function Home() {
     });
 
     const result = await res.json();
-    if (result.error) return;
-    setResponse(result.output);
+    if (!result.error) {
+      setResponse(result.output);
+      reset({ name: "", problem: "" });
+    }
     setIsLoading(false);
   };
 
@@ -65,11 +68,14 @@ export default function Home() {
           return (
             <Button
               key={person.id}
-              onClick={() => setActivePersona(person)}
+              onClick={() => {
+                setActivePersona(person);
+                reset({ name: "", problem: "" });
+              }}
               className={`${
                 activePersona.id === person.id ? "active" : ""
               } flex-1`}
-              disabled={response != null}
+              disabled={response != null || isLoading}
             >
               {person.name}
             </Button>
@@ -117,7 +123,7 @@ export default function Home() {
             className="active mt-4 p-5 shadow-md"
             disabled={isLoading}
           >
-            {activePersona.req}
+            {isLoading ? "Loading..." : activePersona.req}
           </Button>
         </form>
       ) : (
