@@ -61,9 +61,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex max-w-[600px] flex-col items-center justify-center gap-3 rounded-lg bg-background-light p-10 shadow-lg">
-      <h1 className="h1-bold">Davin Goggins v2</h1>
-      <div className="flex w-full justify-between gap-3">
+    <div className="max-sm:text- flex max-w-[600px] flex-col flex-wrap items-center justify-center gap-3 rounded-lg bg-background-light p-10 shadow-lg max-sm:max-w-[400px]">
+      <h1 className="h1-bold max-sm:text-[35px]">Davin Goggins v2</h1>
+      <div className="flex w-full flex-wrap justify-between gap-3">
         {persona.map((person) => {
           return (
             <Button
@@ -83,7 +83,7 @@ export default function Home() {
         })}
       </div>
 
-      <div className="my-3 size-[100px] overflow-hidden rounded-full">
+      <div className="my-3 size-[100px] overflow-hidden rounded-full max-sm:size-[80px]">
         <Image
           src={activePersona.image}
           alt={`${activePersona.name}'s image`}
