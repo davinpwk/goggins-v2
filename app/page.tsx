@@ -61,7 +61,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-sm:text- flex max-w-[600px] flex-col flex-wrap items-center justify-center gap-3 rounded-lg bg-background-light p-10 shadow-lg max-sm:max-w-[400px]">
+    <div className="flex max-w-[600px] flex-col flex-wrap items-center justify-center gap-3 rounded-lg bg-background-light p-10 shadow-lg max-sm:max-w-[400px]">
       <h1 className="h1-bold max-sm:text-[35px]">Davin Goggins v2</h1>
       <div className="flex w-full flex-wrap justify-between gap-3">
         {persona.map((person) => {
