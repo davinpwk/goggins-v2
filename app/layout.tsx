@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${sansitaSwashed.variable} ${robotoMono.className} flex min-h-screen flex-col items-center justify-center bg-gradient antialiased`}
       >
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
