@@ -5,33 +5,35 @@ import { persona } from "@/constants/persona";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-const runPrompt = async (name: string, problem: string, personaId: number) => {
-  const prompt = `
-    My name is ${name}, my problem is ${problem}.
-  `;
-};
-
-export async function POST(req: Request, res: NextResponse) {
+export async function POST(req: Request) {
   const body = await req.json();
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4",
-    messages: [
-      {
-        role: "system",
-        content: `${persona[body.personaId].prompt}`,
-      },
-      {
-        role: "user",
-        content: `My name is ${body.name}, my problem is ${body.problem}`,
-      },
-    ],
-    max_tokens: 200,
-  });
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: `${persona[body.personaId].prompt}`,
+        },
+        {
+          role: "user",
+          content: `My name is ${body.name}, my problem is ${body.problem}`,
+        },
+      ],
+      max_tokens: 200,
+    });
 
-  const result = response.choices[0].message.content;
-  console.log(body);
-  console.log(result);
+    const result = response.choices[0].message.content;
+    console.log(body);
+    console.log(result);
 
-  return NextResponse.json({ output: result }, { status: 200 });
+    return NextResponse.json({ output: result }, { status: 200 });
+  } catch (error) {
+    console.error("OpenAI API error: ", error);
+    return NextResponse.json(
+      { error: "Failed to process request." },
+      { status: 500 }
+    );
+  }
 }

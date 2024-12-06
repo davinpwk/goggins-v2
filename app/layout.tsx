@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${sansitaSwashed.variable} ${robotoMono.className} bg-gradient flex min-h-screen flex-col items-center justify-center antialiased`}
+        className={`${sansitaSwashed.variable} ${robotoMono.className} flex min-h-screen flex-col items-center justify-center bg-gradient antialiased`}
       >
         {children}
       </body>

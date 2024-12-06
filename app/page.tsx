@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
@@ -16,6 +17,13 @@ interface Persona {
   req: string;
   prompt: string;
   reset: string;
+  image: string;
+  desc: string;
+}
+
+interface FormData {
+  name: string;
+  problem: string;
 }
 
 export default function Home() {
@@ -27,9 +35,9 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const fetchResponse = async (data: any) => {
+  const fetchResponse = async (data: FormData) => {
     setIsLoading(true);
     const res = await fetch("/api", {
       method: "POST",
@@ -44,13 +52,13 @@ export default function Home() {
     });
 
     const result = await res.json();
+    if (result.error) return;
     setResponse(result.output);
-    console.log("API result", result.output);
     setIsLoading(false);
   };
 
   return (
-    <div className="flex flex-col items-center justify-start gap-4 rounded-lg bg-background-light p-10 shadow-lg">
+    <div className="flex max-w-[600px] flex-col items-center justify-center gap-3 rounded-lg bg-background-light p-10 shadow-lg">
       <h1 className="h1-bold">Davin Goggins v2</h1>
       <div className="flex w-full justify-between gap-3">
         {persona.map((person) => {
@@ -69,6 +77,17 @@ export default function Home() {
         })}
       </div>
 
+      <div className="my-3 size-[100px] overflow-hidden rounded-full">
+        <Image
+          src={activePersona.image}
+          alt={`${activePersona.name}'s image`}
+          width={100}
+          height={100}
+          className="size-full object-cover"
+        />
+      </div>
+      <p className="mb-3 flex-wrap text-center text-sm">{activePersona.desc}</p>
+
       {response === null ? (
         <form
           onSubmit={handleSubmit(fetchResponse)}
@@ -78,21 +97,19 @@ export default function Home() {
             id="name"
             type="text"
             placeholder="NAME"
-            className="border-none p-5 shadow-md"
+            className="border-none bg-light p-5 text-primary shadow-md"
             {...register("name", { required: "Name is required" })}
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm">{errors.name.message}</p>
-          )}
+          {errors.name && <p className="text-sm">{errors.name.message}</p>}
 
           <Textarea
             id="problem"
             placeholder={activePersona.problem}
-            className="border-none p-5 shadow-md"
+            className="border-none bg-light p-5 text-primary shadow-md"
             {...register("problem", { required: "Problem is required" })}
           />
           {errors.problem && (
-            <p className="text-red-500 text-sm">{errors.problem.message}</p>
+            <p className="text-sm">{errors.problem.message}</p>
           )}
 
           <Button
@@ -108,7 +125,7 @@ export default function Home() {
           <TextareaAutosize
             name="responseText"
             id="responseText"
-            className="scrollbar-hidden max-h-[300px] rounded-md border-none p-5 text-justify shadow-md"
+            className="scrollbar-hidden max-h-[250px] rounded-md border-none bg-light p-5 text-justify text-primary shadow-md"
             value={response}
           />
           <Button
@@ -119,6 +136,8 @@ export default function Home() {
           </Button>
         </div>
       )}
+
+      <p className="pt-4 text-xs !text-opacity-0">cr. davinpwk 2024</p>
     </div>
   );
 }
