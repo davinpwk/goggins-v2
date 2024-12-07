@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "chatgpt-4o-latest",
       messages: [
         {
           role: "system",
@@ -21,7 +21,7 @@ export async function POST(req: Request) {
           content: `My name is ${body.name}, my problem is ${body.problem}`,
         },
       ],
-      max_tokens: 200,
+      max_tokens: 400,
     });
 
     const result = response.choices[0].message.content;
