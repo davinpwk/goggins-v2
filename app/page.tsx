@@ -40,7 +40,7 @@ export default function Home() {
 
   const fetchResponse = async (data: FormData) => {
     setIsLoading(true);
-    const res = await fetch("/api", {
+    const res = await fetch("/api/openAI", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -14,6 +14,8 @@ export default {
     },
     backgroundImage: {
       gradient: "linear-gradient(to bottom, #F8FFAE, #43C6AC)",
+    },
+    backgroundColor: {
       light: "#FDF7F4",
     },
     fontFamily: {
